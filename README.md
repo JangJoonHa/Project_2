@@ -66,6 +66,7 @@ AdamW 옵티마이저를 사용하여 학습 파라미터를 업데이트했습�
             print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {total_loss / len(train_loader):.4f}")
 # Step 8. 검증 루프 (Evaluation Loop)
 테스트 데이터셋에서 모델의 성능을 평가하기 위해 검증 루프를 작성했습니다. 모델의 예측값과 실제 라벨을 비교하여 정확도(accuracy)를 계산했습니다.
+
 def evaluate_model(model, test_loader):
     model.eval()
     predictions, labels = [], []
@@ -84,8 +85,12 @@ def evaluate_model(model, test_loader):
 # Step 9. 훈련 및 평가 (Training and Evaluation)
 훈련 루프와 검증 루프를 사용해 모델을 학습시키고 성능을 평가했습니다.
 
+            train_model(model, train_loader, optimizer, num_epochs=3)
+            evaluate_model(model, test_loader)
+
 # Step 10. 예측 함수 (Prediction Function)
 새로운 텍스트에 대한 감성을 예측할 수 있는 함수를 작성했습니다. 입력 텍스트를 토크나이저를 통해 처리한 뒤, 모델을 사용해 감성 확률과 최종 레이블을 반환합니다.
+
 def predict_sentiment(text):
     inputs = tokenizer(text, return_tensors='pt', truncation=True, padding='max_length', max_length=128).to(device)
     with torch.no_grad():
@@ -97,6 +102,7 @@ def predict_sentiment(text):
         
 # Step 11. 예시 문장 테스트 (Example Sentences Testing)
 다양한 문장에 대해 모델이 감성을 정확히 분류하는지 테스트했습니다.
+
 example_text_positive = "The movie was an incredible experience, with a captivating storyline and beautiful performances by the cast."
 example_text_negative = "I couldn't stand the movie, it was slow, boring, and lacked any real character development."
 
