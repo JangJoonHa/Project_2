@@ -25,6 +25,7 @@ DistilBertForSequenceClassification: 입력 텍스트에 대해 감성을 분류
 
 # Step 4. 데이터 전처리 함수 및 데이터셋 변환 (Data Preprocessing and Transformation)
 데이터셋의 텍스트를 토큰화하여 모델 입력으로 변환했습니다. 토큰화 과정에서 패딩, 길이 제한, 잘림(truncation)을 적용했습니다.
+
                         def preprocess_function(examples):
                                     return tokenizer(examples['text'], truncation=True, padding='max_length', max_length=128)
 
