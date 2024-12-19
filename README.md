@@ -37,15 +37,17 @@ DistilBertForSequenceClassification: 입력 텍스트에 대해 감성을 분류
 # Step 5. DataLoader 준비 (Preparing DataLoader)
 DataLoader를 사용해 배치(batch) 단위로 데이터를 처리할 수 있도록 설정했습니다. 이를 통해 학습 및 평가 단계에서 데이터를 효율적으로 로드했습니다. 이때 batch_size나 num_workers를 조절하여 더욱더 정확도를 높일 수 있습니다.
 
-train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, collate_fn=collate_fn, num_workers=2)
-test_loader = DataLoader(test_dataset, batch_size=16, collate_fn=collate_fn, num_workers=2)
+            train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, collate_fn=collate_fn, num_workers=2)
+            test_loader = DataLoader(test_dataset, batch_size=16, collate_fn=collate_fn, num_workers=2)
 
 # Step 6. 옵티마이저와 학습률 스케줄러 설정 (Optimizer and Learning Rate Scheduler)
 AdamW 옵티마이저를 사용하여 학습 파라미터를 업데이트했습니다. 학습률은 lr=5e-5로 설정했습니다.
-optimizer = AdamW(model.parameters(), lr=5e-5)
+
+            optimizer = AdamW(model.parameters(), lr=5e-5)
 
 # Step 7. 훈련 루프 (Training Loop)
 모델 학습을 위한 훈련 루프를 작성했습니다. 각 에폭(epoch)에서 배치 단위로 데이터를 입력받아 손실을 계산하고, 역전파를 통해 모델 파라미터를 업데이트했습니다.
+
     def train_model(model, train_loader, optimizer, num_epochs):
         model.train()
         for epoch in range(num_epochs):
