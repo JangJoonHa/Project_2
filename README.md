@@ -51,7 +51,7 @@ optimizer = AdamW(model.parameters(), lr=5e-5)
                 batch = {key: val.to(device) for key, val in batch.items()}
 
                 outputs = model(**batch)
-                loss = outputs.loss
+loss = outputs.loss
                 loss.backward()
                 optimizer.step()
                 optimizer.zero_grad()
