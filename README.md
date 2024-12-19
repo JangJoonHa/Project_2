@@ -145,7 +145,9 @@ AdamW 옵티마이저를 사용하여 학습 파라미터를 업데이트했습�
 - 문장 1 (Positive)
 
     문장: "The movie was an incredible experience, with a captivating storyline and beautiful performances by the cast."
+  
     예측 결과: Positive
+  
     확률: [[0.17231593, 0.8276841]]
   
 해석:
@@ -155,7 +157,9 @@ AdamW 옵티마이저를 사용하여 학습 파라미터를 업데이트했습�
 - 문장 2 (Negative)
 
     문장: "I couldn't stand the movie, it was slow, boring, and lacked any real character development."
+  
     예측 결과: Negative
+  
     확률: [[0.6052498, 0.39475012]]
   
 해석:
