@@ -15,6 +15,7 @@ test_dataset = dataset['test'].shuffle(seed=42).select(range(50))   # 테스트 
 
 # Step 3. 모델 및 토크나이저 초기화 (Model and Tokenizer Initialization)
 사용한 모델은 DistilBERT로, 이는 경량화된 BERT 모델입니다. DistilBERT는 빠르고 효율적이면서도 높은 성능을 제공하기 때문에 본 프로젝트에 적합하다 판단하였습니다. Hugging Face Transformers 라이브러리를 통해 모델과 토크나이저를 불러왔습니다. 여기서 함수에 대해서 설명을 추가하면
+
 DistilBertTokenizer: 텍스트를 모델이 이해할 수 있는 토큰 형태로 변환합니다.
 DistilBertForSequenceClassification: 입력 텍스트에 대해 감성을 분류합니다. 으로
 
@@ -24,11 +25,11 @@ DistilBertForSequenceClassification: 입력 텍스트에 대해 감성을 분류
 
 # Step 4. 데이터 전처리 함수 및 데이터셋 변환 (Data Preprocessing and Transformation)
 데이터셋의 텍스트를 토큰화하여 모델 입력으로 변환했습니다. 토큰화 과정에서 패딩, 길이 제한, 잘림(truncation)을 적용했습니다.
-def preprocess_function(examples):
-    return tokenizer(examples['text'], truncation=True, padding='max_length', max_length=128)
+                                    def preprocess_function(examples):
+                                        return tokenizer(examples['text'], truncation=True, padding='max_length', max_length=128)
 
-train_dataset = train_dataset.map(preprocess_function, batched=True)
-test_dataset = test_dataset.map(preprocess_function, batched=True)
+                                    train_dataset = train_dataset.map(preprocess_function, batched=True)
+                                    test_dataset = test_dataset.map(preprocess_function, batched=True)
 또한, 데이터셋을 PyTorch 텐서로 변환했습니다
 
 # Step 5. DataLoader 준비 (Preparing DataLoader)
