@@ -5,6 +5,8 @@
 # Step 1. 디바이스 설정 (Device Configuration)
 모델 학습 및 추론 과정에서 GPU를 사용할 수 있도록 디바이스를 설정했습니다. GPU가 없는 경우 CPU를 사용합니다.
 
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 # Step 2. 데이터셋 로드 및 샘플링
 데이터의 경우 처음에 
 
