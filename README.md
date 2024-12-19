@@ -29,23 +29,23 @@ DistilBertForSequenceClassification: 입력 텍스트에 대해 감성을 분류
 # Step 4. 데이터 전처리 함수 및 데이터셋 변환 (Data Preprocessing and Transformation)
 데이터셋의 텍스트를 토큰화하여 모델 입력으로 변환했습니다. 토큰화 과정에서 패딩, 길이 제한, 잘림(truncation)을 적용했습니다.
 
-            def preprocess_function(examples):
-                    return tokenizer(examples['text'], truncation=True, padding='max_length', max_length=128)
+    def preprocess_function(examples):
+        return tokenizer(examples['text'], truncation=True, padding='max_length', max_length=128)
 
-                    train_dataset = train_dataset.map(preprocess_function, batched=True)
-                    test_dataset = test_dataset.map(preprocess_function, batched=True)
+        train_dataset = train_dataset.map(preprocess_function, batched=True)
+        test_dataset = test_dataset.map(preprocess_function, batched=True)
 또한, 데이터셋을 PyTorch 텐서로 변환했습니다
 
 # Step 5. DataLoader 준비 (Preparing DataLoader)
 DataLoader를 사용해 배치(batch) 단위로 데이터를 처리할 수 있도록 설정했습니다. 이를 통해 학습 및 평가 단계에서 데이터를 효율적으로 로드했습니다. 이때 batch_size나 num_workers를 조절하여 더욱더 정확도를 높일 수 있습니다.
 
-            train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, collate_fn=collate_fn, num_workers=2)
-            test_loader = DataLoader(test_dataset, batch_size=16, collate_fn=collate_fn, num_workers=2)
+    train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, collate_fn=collate_fn, num_workers=2)
+    test_loader = DataLoader(test_dataset, batch_size=16, collate_fn=collate_fn, num_workers=2)
 
 # Step 6. 옵티마이저와 학습률 스케줄러 설정 (Optimizer and Learning Rate Scheduler)
 AdamW 옵티마이저를 사용하여 학습 파라미터를 업데이트했습니다. 학습률은 lr=5e-5로 설정했습니다.
 
-            optimizer = AdamW(model.parameters(), lr=5e-5)
+    optimizer = AdamW(model.parameters(), lr=5e-5)
 
 # Step 7. 훈련 루프 (Training Loop)
 모델 학습을 위한 훈련 루프를 작성했습니다. 각 에폭(epoch)에서 배치 단위로 데이터를 입력받아 손실을 계산하고, 역전파를 통해 모델 파라미터를 업데이트했습니다.
@@ -66,6 +66,7 @@ AdamW 옵티마이저를 사용하여 학습 파라미터를 업데이트했습�
                 total_loss += loss.item()
 
             print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {total_loss / len(train_loader):.4f}")
+            
 # Step 8. 검증 루프 (Evaluation Loop)
 테스트 데이터셋에서 모델의 성능을 평가하기 위해 검증 루프를 작성했습니다. 모델의 예측값과 실제 라벨을 비교하여 정확도(accuracy)를 계산했습니다.
 
@@ -119,15 +120,16 @@ AdamW 옵티마이저를 사용하여 학습 파라미터를 업데이트했습�
 1. 훈련 과정 (Training Process)
 훈련 과정에서의 손실(Loss)은 각 에폭(epoch)을 거치며 점진적으로 감소했습니다. 이는 모델이 점점 더 데이터를 잘 학습하고 있음을 나타냅니다.
 
-Epoch 1/3: Loss = 0.6920
-Epoch 2/3: Loss = 0.6111
-Epoch 3/3: Loss = 0.4422
+    Epoch 1/3: Loss = 0.6920
+    Epoch 2/3: Loss = 0.6111
+    Epoch 3/3: Loss = 0.4422
 
 해석
 초기 손실 값(0.6920)은 모델이 랜덤 추측 수준에 머물러 있음을 보여줍니다. 이후 손실 값이 크게 감소했으며, 마지막 에폭에서 0.4422로 도달했습니다. 이는 모델이 텍스트 데이터의 감성 패턴을 효과적으로 학습했음을 의미합니다.
 
 2. 테스트 데이터 평가 (Test Dataset Evaluation)
-Test Accuracy: 62.00%
+   
+    Test Accuracy: 62.00%
 
 해석
 테스트 정확도는 모델이 학습되지 않은 새로운 데이터에서 얼마나 잘 작동하는지를 나타냅니다.
@@ -140,18 +142,20 @@ Test Accuracy: 62.00%
 
 - 문장 1 (Positive)
 
-문장: "The movie was an incredible experience, with a captivating storyline and beautiful performances by the cast."
-예측 결과: Positive
-확률: [[0.17231593, 0.8276841]]
+    문장: "The movie was an incredible experience, with a captivating storyline and beautiful performances by the cast."
+    예측 결과: Positive
+    확률: [[0.17231593, 0.8276841]]
+  
 해석:
 긍정 감성(Positive)으로 분류되었으며, 확률 값은 긍정 감성이 **82.76%**로 높은 자신감을 보였습니다.
 이는 리뷰에 포함된 긍정적인 단어와 표현("incredible", "captivating", "beautiful")을 모델이 잘 이해했음을 시사합니다.
 
 - 문장 2 (Negative)
 
-문장: "I couldn't stand the movie, it was slow, boring, and lacked any real character development."
-예측 결과: Negative
-확률: [[0.6052498, 0.39475012]]
+    문장: "I couldn't stand the movie, it was slow, boring, and lacked any real character development."
+    예측 결과: Negative
+    확률: [[0.6052498, 0.39475012]]
+  
 해석:
 부정 감성(Negative)으로 분류되었으며, 확률 값은 부정 감성이 60.52%, 긍정 감성이 **39.48%**로 나왔습니다.
 모델이 "slow", "boring", "lacked"와 같은 부정적인 단어를 인식했으나, 약간의 불확실성도 존재함을 알 수 있습니다.
