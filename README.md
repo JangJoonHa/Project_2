@@ -18,8 +18,8 @@ test_dataset = dataset['test'].shuffle(seed=42).select(range(50))   # 테스트 
 DistilBertTokenizer: 텍스트를 모델이 이해할 수 있는 토큰 형태로 변환합니다.
 DistilBertForSequenceClassification: 입력 텍스트에 대해 감성을 분류합니다. 으로
 
-tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
-model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2).to(device)
+            tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+            model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=2).to(device)
 이 형식으로,tokenizer와 model을 지정했습니다.
 
 # Step 4. 데이터 전처리 함수 및 데이터셋 변환 (Data Preprocessing and Transformation)
@@ -51,7 +51,7 @@ optimizer = AdamW(model.parameters(), lr=5e-5)
                 batch = {key: val.to(device) for key, val in batch.items()}
 
                 outputs = model(**batch)
-loss = outputs.loss
+                loss = outputs.loss
                 loss.backward()
                 optimizer.step()
                 optimizer.zero_grad()
