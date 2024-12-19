@@ -43,22 +43,22 @@ optimizer = AdamW(model.parameters(), lr=5e-5)
 
 # Step 7. 훈련 루프 (Training Loop)
 모델 학습을 위한 훈련 루프를 작성했습니다. 각 에폭(epoch)에서 배치 단위로 데이터를 입력받아 손실을 계산하고, 역전파를 통해 모델 파라미터를 업데이트했습니다.
-def train_model(model, train_loader, optimizer, num_epochs):
-    model.train()
-    for epoch in range(num_epochs):
-        total_loss = 0
-        for batch in train_loader:
-            batch = {key: val.to(device) for key, val in batch.items()}
+    def train_model(model, train_loader, optimizer, num_epochs):
+        model.train()
+        for epoch in range(num_epochs):
+            total_loss = 0
+            for batch in train_loader:
+                batch = {key: val.to(device) for key, val in batch.items()}
 
-            outputs = model(**batch)
-            loss = outputs.loss
-            loss.backward()
-            optimizer.step()
-            optimizer.zero_grad()
+                outputs = model(**batch)
+                loss = outputs.loss
+                loss.backward()
+                optimizer.step()
+                optimizer.zero_grad()
 
-            total_loss += loss.item()
+                total_loss += loss.item()
 
-        print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {total_loss / len(train_loader):.4f}")
+            print(f"Epoch {epoch + 1}/{num_epochs}, Loss: {total_loss / len(train_loader):.4f}")
 # Step 8. 검증 루프 (Evaluation Loop)
 테스트 데이터셋에서 모델의 성능을 평가하기 위해 검증 루프를 작성했습니다. 모델의 예측값과 실제 라벨을 비교하여 정확도(accuracy)를 계산했습니다.
 def evaluate_model(model, test_loader):
