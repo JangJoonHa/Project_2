@@ -8,9 +8,9 @@
 # Step 2. 데이터셋 로드 및 샘플링
 데이터의 경우 처음에 
 
-  dataset = load_dataset("imdb")
-  train_dataset = dataset['train'].shuffle(seed=42).select(range(100))  # 훈련 데이터 1000개 (추천)
-  test_dataset = dataset['test'].shuffle(seed=42).select(range(50))   # 테스트 데이터 500개 (추천)
+    dataset = load_dataset("imdb")
+    train_dataset = dataset['train'].shuffle(seed=42).select(range(100))  # 훈련 데이터 1000개 (추천)
+    test_dataset = dataset['test'].shuffle(seed=42).select(range(50))   # 테스트 데이터 500개 (추천)
 
 이러한 형식으로 데이터는 IMDB 리뷰 데이터셋으로, Hugging Face Datasets 라이브러리를 통해 가져왔습니다. 이 데이터셋은 영화 리뷰 텍스트와 이에 대한 감성 레이블(positive 또는 negative)을 포함하고 있습니다. 훈련 데이터 1000개, 테스트 데이터 500개를 이용하려 하였지만, 코딩 시간이 늦음을 고려하여 시간상 및 편의성을 위해 정확도를 떨어뜨리지만 시간 효율성을 늘리게끔 훈련 데이터 100개, 테스트 데이터 50개로 줄였다. 훈련 데이터와 테스트 데이터는 shuffle 메서드를 사용해 무작위로 섞은 후 선택했습니다.
 
